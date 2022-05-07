@@ -1,8 +1,9 @@
-def BruteForce(n,m,p,w):
+def F_BruteForce(n,m,p,w):
     #n=no of objects, m=capacity, p=profit and w=weight
     possible_combinations=pow(2,n)
     max_profit=0
     max_weight=0
+    max_fractional_profit=0
     for i in range(0, possible_combinations):
         binary=bin(i)[2:]
         profit=0
@@ -12,26 +13,21 @@ def BruteForce(n,m,p,w):
         for j in range(0, len(binary)):
             profit=profit+int(binary[j])*p[j]
             weight=weight+int(binary[j])*w[j]
-        if weight<m:
-            remaining_weight=m-weight
-            max_fractional_profit=0
-            fractional_profit=0
-            for k in range(0, len(binary)):
-                if binary[k]=="0":
-                    fractional_profit=(p[k]/w[k])*remaining_weight
-                    if fractional_profit> max_fractional_profit and profit>fractional_profit:
-                        max_fractional_profit=fractional_profit
-                        index=k
-                    else:
-                        index="null"
-        total_profit=profit+max_fractional_profit
-        # print("Combination",binary, "Profit",profit,"Weight",weight,"Fractional Profit",max_fractional_profit,"Index",index, "Remaining_Weight", remaining_weight, "Totoal profit",total_profit)
-        
-        if  total_profit>=max_profit and weight<=m and index != "null":
-            max_profit=total_profit
-            max_weight=weight+remaining_weight
+        if weight>max_weight and weight<=m and profit>=max_profit:
+            max_profit=profit
+            max_weight=weight
             combination=binary
-    return max_profit,max_weight,combination
+    remaining_weight=m-max_weight
+    if remaining_weight!=0:
+        fractional_profit=0
+        for k in range(0, len(combination)):
+            if combination[k]=="0":
+                fractional_profit=(p[k]/w[k])*remaining_weight
+                if fractional_profit>=max_fractional_profit:
+                    max_fractional_profit=fractional_profit
+    max_profit=max_profit+max_fractional_profit
+    max_weight=max_weight+remaining_weight
+    return (max_profit,max_weight,combination)
 
 
 def GreedyAlgorithm(n,m, p,w):
@@ -53,16 +49,16 @@ def GreedyAlgorithm(n,m, p,w):
             profit=profit+cost[i][0]*remaining_weight
             remaining_weight=0
         print("Object Index: ",index, "Profit:",p[index], "Weight: ", w[index],"Total Profit: ", profit, "Remaining Weight:", remaining_weight)
+    return profit
     
 
 if __name__=="__main__":
-    p=[12,14,56,8]
-    w=[2,7,10,5]
-    m=20
-    n=len(p)
-    profit, weight, combination= BruteForce(n,m,p,w)
+    w_2=[12,2,1,1,4]
+    p_2=[4,2,1,2,4]
+    m_2=15
+    n_2=len(w_2)
     print("-----------------------BruteForce----------------------")
-    print(profit, weight, combination)
+    print(F_BruteForce(n_2,m_2,p_2,w_2))
     print("--------------------Greedy-----------------------------")
-    GreedyAlgorithm(n,m,p,w)
+    print(GreedyAlgorithm(n_2,m_2,p_2,w_2))
     
