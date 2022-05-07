@@ -12,7 +12,7 @@ def K_BruteForce(n,m,p,w):
         for j in range(0, len(binary)):
             profit=profit+int(binary[j])*p[j]
             weight=weight+int(binary[j])*w[j]
-        if weight>max_weight and weight<=m and profit>=max_profit:
+        if weight<=m and profit>=max_profit:
             max_profit=profit
             max_weight=weight
             combination=binary

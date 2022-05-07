@@ -13,7 +13,7 @@ def F_BruteForce(n,m,p,w):
         for j in range(0, len(binary)):
             profit=profit+int(binary[j])*p[j]
             weight=weight+int(binary[j])*w[j]
-        if weight>max_weight and weight<=m and profit>=max_profit:
+        if weight<=m and profit>=max_profit:
             max_profit=profit
             max_weight=weight
             combination=binary
@@ -48,17 +48,21 @@ def GreedyAlgorithm(n,m, p,w):
         else:
             profit=profit+cost[i][0]*remaining_weight
             remaining_weight=0
-        print("Object Index: ",index, "Profit:",p[index], "Weight: ", w[index],"Total Profit: ", profit, "Remaining Weight:", remaining_weight)
+        print("Object Index: ",index, 
+        "Profit:",p[index], 
+        "Weight: ", w[index],
+        "Total Profit: ", profit, 
+        "Remaining Weight:", remaining_weight)
     return profit
     
 
 if __name__=="__main__":
-    w_2=[12,2,1,1,4]
-    p_2=[4,2,1,2,4]
-    m_2=15
-    n_2=len(w_2)
+    w_1=[3,4,6,5]
+    p_1=[2,3,1,4]
+    m_1=8
+    n_1=len(w_1)
     print("-----------------------BruteForce----------------------")
-    print(F_BruteForce(n_2,m_2,p_2,w_2))
+    print(F_BruteForce(n_1,m_1,p_1,w_1))
     print("--------------------Greedy-----------------------------")
-    print(GreedyAlgorithm(n_2,m_2,p_2,w_2))
+    print(GreedyAlgorithm(n_1,m_1,p_1,w_1))
     
